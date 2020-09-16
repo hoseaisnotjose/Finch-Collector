@@ -8,4 +8,7 @@ def home(request):
     return HttpResponse('<h1>Welcome to Finch Collector!</h1>')
 
 def about(request):
-    return HttpResponse('<h1>About the Finch Collector</h1>')
+    return render(request, 'about.html')
+
+def finches_index(request):
+    return render(request, 'finches/index.html', {'finches': finches})
