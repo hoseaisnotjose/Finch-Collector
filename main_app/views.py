@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Finch
 
 
@@ -8,6 +8,15 @@ from django.http import HttpResponse
 class FinchCreate(CreateView):
     model = Finch
     fields = ['name', 'breed', 'description', 'age']
+    
+class FinchUpdate(UpdateView):
+    model = Finch
+        # we don't want to "update" finch name so we exclude it from name field!
+    fields = ['breed', 'description', 'age']
+
+class FinchDelete(DeleteView):
+    model = Finch
+    success_url = '/finches/'
 
 
 # Define the home view
