@@ -6,3 +6,5 @@ from .models import Finch
 
 # Register your models here.
 admin.site.register(Finch)
+# register feeding model
+admin.site.register(Feeding)

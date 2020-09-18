@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Finch
+from .forms import FeedingForm
 
 
 from django.http import HttpResponse
@@ -32,4 +33,8 @@ def finches_index(request):
 
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
-    return render(request, 'finches/detail.html', { 'finch': finch })
+    feeding_form = FeedingForm()
+    return render(request, 'finches/detail.html', {
+        'finch': finch, 'feeding_form': feeding_form
+        })
+
