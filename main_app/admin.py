@@ -1,4 +1,6 @@
 from django.contrib import admin
+# add feeding to the import
+from .models import Finch, Feeding
 # import models here
 from .models import Finch
 
