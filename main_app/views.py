@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
 from .models import Finch
 
-# Create your views here.
+
 from django.http import HttpResponse
+# Create your views here.
+class FinchCreate(CreateView):
+    model = Finch
+    fields = ['name', 'breed', 'description', 'age']
 
 
 # Define the home view
