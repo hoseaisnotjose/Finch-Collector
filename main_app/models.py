@@ -9,12 +9,19 @@ MEALS = (
     ('D', 'Dinner'),
 )
 
+# define toy
+class Toy(models.Model):
+    name = models.CharField(max_length=50)
+    color = models.CharField(max_length=20)
+
 # Create your models here.
 class  Finch(models.Model):
     name = models.CharField(max_length=100)
     breed = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
     age = models.IntegerField()
+    # M:M relationship
+    toys = models.ManyToManyField(Toy)
 
     def __str__(self):
         return self.name
