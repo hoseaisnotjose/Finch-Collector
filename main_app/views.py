@@ -37,4 +37,16 @@ def finches_detail(request, finch_id):
     return render(request, 'finches/detail.html', {
         'finch': finch, 'feeding_form': feeding_form
         })
+    
+def add_feeding(request, finch_id):
+    # create a ModelForm instance using the data in the request.POST
+    form = FeedingForm(request.POST)
+    # validate the form
+    if form.is_valid():
+        # don't save the form to the db until it
+        # has the finch_id assigned
+        new_feeding = form.save(commit=False)
+        new_feeding.finch_id = finch_id
+        new_feeding.save()
+    return redirect('detail', finch_id=finch_id)
 
