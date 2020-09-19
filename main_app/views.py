@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Finch
+from django.views.generic import ListView, DetailView
+from .models import Finch, Toy
 from .forms import FeedingForm
 
 
@@ -19,7 +20,6 @@ class FinchDelete(DeleteView):
     model = Finch
     success_url = '/finches/'
 
-
 # Define the home view
 def home(request):
     return HttpResponse('<h1>Welcome to Finch Collector!</h1>')
@@ -33,6 +33,8 @@ def finches_index(request):
 
 def finches_detail(request, finch_id):
     finch = Finch.objects.get(id=finch_id)
+    # def toys the finch doesn't have
+    toys_finch_doesnt_have = Toy.objects.exclude(id__in = finch.toys.all().values_list('id'))
     feeding_form = FeedingForm()
     return render(request, 'finches/detail.html', {
         'finch': finch, 'feeding_form': feeding_form,
@@ -51,3 +53,30 @@ def add_feeding(request, finch_id):
         new_feeding.save()
     return redirect('detail', finch_id=finch_id)
 
+def assoc_toy(request, finch_id, toy_id):
+    # I can pass a toy's id instead of the whole object
+    Finch.objects.get(id=finch_id).toys.add(toy_id)
+    return redirect('detail', finch_id=finch_id)
+
+def unassoc_toy(request, finch_id, toy_id):
+# I can pass a toy's id instead of the whole object
+    Finch.objects.get(id=finch_id).toys.remove(toy_id)
+    return redirect('detail', finch_id=finch_id)
+    
+class ToyList(ListView):
+    model = Toy
+
+class ToyDetail(DetailView):
+    model = Toy
+
+class ToyCreate(CreateView):
+    model = Toy
+    fields = '__all__'
+
+class ToyUpdate(UpdateView):
+    model = Toy
+    fields = ['name', 'color']
+
+class ToyDelete(DeleteView):
+    model = Toy
+    success_url = '/toys/'
