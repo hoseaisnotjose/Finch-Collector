@@ -37,4 +37,8 @@ class Feeding(models.Model):
     
     def __str__(self):
         return f"{self.get_meal_display()} on {self.date}"
+    
+    # the below ensures current date is displayed at the top by default
+    class Meta:
+        ordering = ['-date']
 
