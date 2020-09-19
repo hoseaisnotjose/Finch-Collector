@@ -9,7 +9,7 @@ MEALS = (
     ('D', 'Dinner'),
 )
 
-# define toy
+# define toy (M:M Toy added in clas Finch below)
 class Toy(models.Model):
     name = models.CharField(max_length=50)
     color = models.CharField(max_length=20)
