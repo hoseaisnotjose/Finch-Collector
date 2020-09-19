@@ -49,6 +49,7 @@
     </table>
   </div>
 </div>
+
 <hr>
 <div class="row">
   <div class="col s6">
@@ -60,6 +61,12 @@
             <span class="card-title">
               A <span style="color: {{ toy.color }}">{{ toy.color }}</span> {{ toy.name }}
             </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_toy' finch.id toy.id %}" method="post">
+                {% csrf_token %}
+              <button type="submit" class="btn">Remove</button>
+            </form>
           </div>
         </div>
       {% endfor %}
@@ -91,7 +98,11 @@
     {% endif %}
   </div>
 </div>
+
+
+
 <script>
+  // created datepicker below:
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {
     format: 'yyyy-mm-dd',
@@ -101,7 +112,7 @@
   });
 
   // add additional JS to initialize select below
-  const selectEl = document.getElementById('id_meal');
+  let selectEl = document.getElementById('id_meal');
   M.FormSelect.init(selectEl);
 </script>
 {% endblock %}
